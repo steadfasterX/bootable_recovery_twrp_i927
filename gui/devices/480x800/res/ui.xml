@@ -12,6 +12,7 @@
 	<resources>
 		<resource name="font" type="font" filename="Roboto-Regular-20" />
 		<resource name="mediumfont" type="font" filename="Roboto-Regular-20" />
+                <resource name="minifont" type="font" filename="Roboto-Regular-16" />
 		<resource name="filelist" type="font" filename="Roboto-Regular-20" />
 		<resource name="top_bar" type="image" filename="top-bar.jpg" />
 		<resource name="main_button" type="image" filename="menu-button" />
@@ -204,24 +205,30 @@
 				<placement x="0" y="0" />
 			</object>
 
-			<object type="text" color="%text_color%">
-				<font resource="font" />
-				<placement x="100" y="10" />
-				<text>Team Win Recovery Project  v%tw_version%</text>
-			</object>
+                        <object type="text" color="%text_color%">
+                                <font resource="font" />
+                                <placement x="96" y="10" />
+                                <text>sediTWRP v%tw_version%</text>
+                        </object>
 
-			<object type="text" color="%text_color%">
-				<condition var1="tw_simulate_actions" var2="1" />
-				<font resource="font" />
-				<placement x="100" y="40" />
-				<text>SIMULATING ACTIONS</text>
-			</object>
+                        <object type="text" color="%text_color%">
+                                <font resource="minifont" />
+                                <placement x="96" y="43" />
+                                <text>En-/Decryption build for Samsung Stock</text>
+                        </object>
 
-			<object type="text" color="%text_color%">
-				<font resource="font" />
-				<placement x="100" y="70" />
-				<text>%tw_time%</text>
-			</object>
+                        <object type="text" color="%text_color%">
+                                <condition var1="tw_simulate_actions" var2="1" />
+                                <font resource="font" />
+                                <placement x="96" y="40" />
+                                <text>SIMULATING ACTIONS</text>
+                        </object>
+
+                        <object type="text" color="%text_color%">
+                                <font resource="font" />
+                                <placement x="96" y="70" />
+                                <text>%tw_time%</text>
+                        </object>
 
 			<object type="text" color="%text_color%">
 				<font resource="font" />

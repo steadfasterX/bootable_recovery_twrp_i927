@@ -1600,6 +1600,7 @@ int TWPartitionManager::Decrypt_Device(string Password) {
 				emmc->Setup_File_System(false);
 				gui_print("Internal SD successfully decrypted, new block device: '%s'\n", crypto_blkdev_sd);
 			}
+
 #endif //ifdef CRYPTO_SD_FS_TYPE
 #ifdef TW_EXTERNAL_STORAGE_PATH
 #ifdef TW_INCLUDE_CRYPTO_SAMSUNG
