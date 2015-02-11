@@ -208,7 +208,7 @@
                         <object type="text" color="%text_color%">
                                 <font resource="font" />
                                 <placement x="96" y="10" />
-                                <text>sediTWRP v%tw_version%</text>
+                                <text>sediTWRP %tw_version%</text>
                         </object>
 
                         <object type="text" color="%text_color%">

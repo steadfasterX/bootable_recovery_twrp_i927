@@ -325,7 +325,10 @@ static int create_crypto_blk_dev(struct crypt_mnt_ftr *crypt_ftr, unsigned char 
   convert_key_to_hex_ascii(master_key, crypt_ftr->keysize, master_key_ascii);
   sprintf(crypt_params, "%s %s 0 %s 0", crypt_ftr->crypto_type_name,
           master_key_ascii, real_blk_name);
+
+  // debug added by xdajog:
   printf("cryptsetup params: '%s'\n", crypt_params);
+
   crypt_params += strlen(crypt_params) + 1;
   crypt_params = (char *) (((unsigned long)crypt_params + 7) & ~8); /* Align to an 8 byte boundary */
   tgt->next = crypt_params - buffer;
@@ -500,6 +503,7 @@ static int test_mount_encrypted_fs(
   }
 
   //printf("crypt_ftr->fs_size = %lld\n", crypt_ftr.fs_size);
+
   orig_failed_decrypt_count = crypt_ftr.failed_decrypt_count;
 
   if (! (crypt_ftr.flags & CRYPT_MNT_KEY_UNENCRYPTED) ) {
@@ -586,7 +590,6 @@ static int test_mount_encrypted_fs_sd(
     }
 
     // debug by xdajog:
-    printf("rc: %s\n", rc);
     printf("Mountpoint: %s\n", mount_point);
     printf("Label: %s\n", label);
     printf("FS_TYPE: %s\n", fs_type);
@@ -594,6 +597,9 @@ static int test_mount_encrypted_fs_sd(
     printf("CryptopblkDev: %s\n", crypto_blkdev);
 
     sprintf(tmp_mount_point, "%s/tmp_mnt", mount_point);
+    // debug by xdajog:
+    printf("TEMP Mountpoint: %s\n",tmp_mount_point);
+
     mkdir(tmp_mount_point, 0755);
     if ( mount(crypto_blkdev, tmp_mount_point, fs_type, MS_RDONLY, "") ) {
         printf("Error temp mounting decrypted SD block device\n");
@@ -639,7 +645,9 @@ int cryptfs_setup_volume(const char *label, const char *real_blkdev, char *crypt
 #ifdef TW_INCLUDE_CRYPTO_SAMSUNG
     if(using_samsung_encryption) {
         if(!access("/efs/essiv", R_OK)){
-            strcpy(sd_crypt_ftr.crypto_type_name, "aes-cbc-plain:sha1");
+	    // replaced by xdajog: it SHOULD be always essiv right?!
+            //strcpy(sd_crypt_ftr.crypto_type_name, "aes-cbc-plain:sha1");
+            strcpy(sd_crypt_ftr.crypto_type_name, "aes-cbc-essiv:sha256");
         }
         else if(!access("/efs/cryptprop_essiv", R_OK)){
             strcpy(sd_crypt_ftr.crypto_type_name, "aes-cbc-essiv:sha256");

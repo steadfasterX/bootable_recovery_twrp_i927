@@ -1755,7 +1755,7 @@ bool TWPartition::Backup_DD(string backup_folder) {
 	int use_compression;
 
 	sprintf(backup_size, "%llu", Backup_Size);
-	DD_BS = backup_size;
+        DD_BS = backup_size;
 
 	TWFunc::GUI_Operation_Text(TW_BACKUP_TEXT, Display_Name, "Backing Up");
 	gui_print("Backing up %s...\n", Display_Name.c_str());
@@ -1765,7 +1765,13 @@ bool TWPartition::Backup_DD(string backup_folder) {
 
 	Full_FileName = backup_folder + "/" + Backup_FileName;
 
-	Command = "dd if=" + Actual_Block_Device + " of='" + Full_FileName + "'" + " bs=" + DD_BS + "c count=1";
+        // dirty hack by xdajog because somehow /data is always 1 bit bigger than the truth
+	// and simply substractin by 1 results in dd: out of memory error so I do it this way
+        if (strcmp(Backup_Name.c_str(),"data") == 0) {
+		Command = "dd if=" + Actual_Block_Device + " of='" + Full_FileName + "'";
+	} else {
+		Command = "dd if=" + Actual_Block_Device + " of='" + Full_FileName + "'" + " bs=" + DD_BS + "c count=1";
+	}
 	LOGINFO("Backup command: '%s'\n", Command.c_str());
 	TWFunc::Exec_Cmd(Command);
 	if (TWFunc::Get_File_Size(Full_FileName) == 0) {

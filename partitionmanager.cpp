@@ -1593,7 +1593,7 @@ int TWPartitionManager::Decrypt_Device(string Password) {
 			char crypto_blkdev_sd[255];
 			property_get("ro.crypto.sd_fs_crypto_blkdev", crypto_blkdev_sd, "error");
 			if (strcmp(crypto_blkdev_sd, "error") == 0) {
-				LOGERR("Error retrieving decrypted data block device.\n");
+				LOGERR("Error retrieving decrypted block device for internal SD storage.\n");
 			} else if(TWPartition* emmc = Find_Partition_By_Path(EXPAND(TW_INTERNAL_STORAGE_PATH))){
 				emmc->Is_Decrypted = true;
 				emmc->Decrypted_Block_Device = crypto_blkdev_sd;
